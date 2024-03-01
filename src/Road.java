@@ -1,19 +1,18 @@
-import java.util.*;
 class Road {
-  private City city1;
-  private City city2;
+  private int idCitySource;
+  private int idCityDestination;
 
-  public Road(City city1, City city2) {
-    this.city1 = city1;
-    this.city2 = city2;
+  public Road(int city1, int city2) {
+    this.idCitySource = city1;
+    this.idCityDestination = city2;
   }
 
   // Getters
-  public City getCity1() {
-    return city1;
+  public int getIdCitySource() {
+    return idCitySource;
   }
 
-  public City getCity2() {
-    return city2;
+  public int getIdCityDestination() {
+    return idCityDestination;
   }
 }
