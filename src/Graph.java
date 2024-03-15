@@ -37,7 +37,6 @@ class Graph {
     }
   }
 
-  // Méthode pour calculer l'itinéraire minimisant le nombre de routes
   public void calculerItineraireMinimisantNombreRoutes(String depart, String arrivee) {
     City start = findCityByName(depart);
     City end = findCityByName(arrivee);
@@ -64,7 +63,6 @@ class Graph {
       }
     }
 
-    // Reconstruction de l'itinéraire
     ArrayList<City> itinerary = new ArrayList<>();
     City current = end;
     while (current != null) {
@@ -80,7 +78,6 @@ class Graph {
     }
   }
 
-  // Méthode pour calculer l'itinéraire minimisant les kilomètres
   public void calculerItineraireMinimisantKm(String depart, String arrivee) {
     // Utilisation de l'algorithme de Dijkstra pour trouver le chemin le plus court
     City start = findCityByName(depart);
@@ -141,7 +138,6 @@ class Graph {
     }
     return null;
   }
-  // Méthode pour trouver une ville par son ID
   private City findCityById(int id) {
     for (City city : cities) {
       if (city.getId() == id) {
