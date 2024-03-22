@@ -15,4 +15,19 @@ class Road {
   public int getIdCityDestination() {
     return idCityDestination;
   }
+
+  /*private City citySource;
+  private City cityDestination;
+
+  public Road(City city1, City city2) {
+    this.citySource = city1;
+    this.cityDestination = city2;
+  }
+  public City getCitySource() {
+    return citySource;
+  }
+
+  public City getCityDestination() {
+    return cityDestination;
+  }*/
 }
