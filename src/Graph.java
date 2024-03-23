@@ -114,11 +114,11 @@ class Graph {
       current = previousCity.get(current);
     }
 
-    System.out.println("Trajet de " + depart + " à " + arrivee + ": " + (path.size()-1) + " routes et " + visited.get() + " km");
+    System.out.println("Trajet de " + depart + " à " + arrivee + ": " + (path.size()-1) + " routes et " + visited.get(current) + " km");
     for (int i = 0; i < path.size()-1 ; i++) {
       City city1 = path.get(i);
       City city2 = path.get(i+1);
-      System.out.println(city1.getName() + " -> " + city2.getName() + " (" + Util.distance(city1.getLongitude(),city1.getLatitude(), city2.getLongitude(),city2.getLatitude()) + " km)");
+      System.out.println(city1.getName() + " -> " + city2.getName() + " (" + Util.distance(city1.getLatitude(),city1.getLongitude(), city2.getLatitude(),city2.getLongitude()) + " km)");
     }
   }
 
@@ -161,7 +161,7 @@ class Graph {
         City destinationRoad = findCityById(road.getIdCityDestination());
         double distance = countMin + Util.distance(sourceRoad.getLongitude(),sourceRoad.getLatitude(),destinationRoad.getLongitude(),destinationRoad.getLatitude());
 
-         if (!finals.containsKey(destinationRoad) && (distance <provisional.get(destinationRoad))) {
+         if (!finals.containsKey(destinationRoad) && (provisional.get(destinationRoad) == null ||(distance <provisional.get(destinationRoad)))) {
            visited.put(destinationRoad, road);
            provisional.put(destinationRoad, distance);
          }
