@@ -142,6 +142,7 @@ class Graph {
     Map<City, Double> provisional = new HashMap<>();
     Map<City, Double> finals = new HashMap<>();
     Map<City,Road> visited = new HashMap<>();
+    //HashMap<City, City> parent = new HashMap<>();
 
     City city = start;
     provisional.put(start,0.0);
@@ -164,9 +165,11 @@ class Graph {
          if (!finals.containsKey(destinationRoad) && (provisional.get(destinationRoad) == null ||(distance <provisional.get(destinationRoad)))) {
            visited.put(destinationRoad, road);
            provisional.put(destinationRoad, distance);
+           //parent.put(destinationRoad, sourceRoad);
          }
 
       }
+
 
     }
 
