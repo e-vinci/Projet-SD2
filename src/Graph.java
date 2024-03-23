@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 class Graph {
+
   private ArrayList<City> cities;
   private ArrayList<Road> roads;
 
@@ -70,16 +71,13 @@ class Graph {
       current = parent.get(current);
     }
 
-    System.out.println("Trajet de " + depart + " à " + arrivee + ": " + (itinerary.size() - 1) + " routes");
-    for (int i = 0; i < itinerary.size() - 1; i++) {
-      City city1 = itinerary.get(i);
-      City city2 = itinerary.get(i + 1);
-      System.out.println(city1.getName() + " -> " + city2.getName() + " (" + Util.distance(city1.getLatitude(), city1.getLongitude(), city2.getLatitude(), city2.getLongitude()) + " km)");
-    }
+    System.out.println(
+        "Trajet de " + depart + " à " + arrivee + ": " + (routeCount.get(end)) + " routes et "
+            + calculateTotalDistance(itinerary) + " kms");
+    printItinerary(itinerary);
   }
 
   public void calculerItineraireMinimisantKm(String depart, String arrivee) {
-    // Utilisation de l'algorithme de Dijkstra pour trouver le chemin le plus court
     City start = findCityByName(depart);
     City end = findCityByName(arrivee);
 
@@ -103,10 +101,13 @@ class Graph {
       City current = cd.city;
       double distance = cd.distance;
 
-      if (distance > distances.get(current)) continue;
+      if (distance > distances.get(current)) {
+        continue;
+      }
 
       for (City neighbor : getNeighbors(current)) {
-        double newDistance = distance + Util.distance(current.getLatitude(), current.getLongitude(), neighbor.getLatitude(), neighbor.getLongitude());
+        double newDistance = distance + Util.distance(current.getLatitude(), current.getLongitude(),
+            neighbor.getLatitude(), neighbor.getLongitude());
         if (newDistance < distances.get(neighbor)) {
           distances.put(neighbor, newDistance);
           parent.put(neighbor, current);
@@ -115,7 +116,6 @@ class Graph {
       }
     }
 
-    // Reconstruction de l'itinéraire
     ArrayList<City> itinerary = new ArrayList<>();
     City current = end;
     while (current != null) {
@@ -123,29 +123,31 @@ class Graph {
       current = parent.get(current);
     }
 
-    System.out.println("Trajet de " + depart + " à " + arrivee + ": " + (itinerary.size() - 1) + " routes et " + distances.get(end) + " kms");
+    double totalDistance = distances.get(end);
+    System.out.println("Trajet de " + depart + " à " + arrivee + ": " + (itinerary.size() - 1) +
+        " routes et " + totalDistance + " kms");
+
     for (int i = 0; i < itinerary.size() - 1; i++) {
       City city1 = itinerary.get(i);
       City city2 = itinerary.get(i + 1);
-      System.out.println(city1.getName() + " -> " + city2.getName() + " (" + Util.distance(city1.getLatitude(), city1.getLongitude(), city2.getLatitude(), city2.getLongitude()) + " km)");
+      double distanceBetweenCities = Util.distance(city1.getLatitude(), city1.getLongitude(),
+          city2.getLatitude(), city2.getLongitude());
+
+      System.out.println(city1.getName() + " -> " + city2.getName() + " (" + String.format("%.2f",
+          distanceBetweenCities) + " km)");
     }
   }
+
+
   private City findCityByName(String name) {
     for (City city : cities) {
-      if (city.getName().equals(name)) {
+      if (city.getName().equalsIgnoreCase(name)) {
         return city;
       }
     }
     return null;
   }
-  private City findCityById(int id) {
-    for (City city : cities) {
-      if (city.getId() == id) {
-        return city;
-      }
-    }
-    return null;
-  }
+
   private ArrayList<City> getNeighbors(City city) {
     ArrayList<City> neighbors = new ArrayList<>();
     for (Road road : roads) {
@@ -156,5 +158,37 @@ class Graph {
       }
     }
     return neighbors;
+  }
+
+  private City findCityById(int id) {
+    for (City city : cities) {
+      if (city.getId() == id) {
+        return city;
+      }
+    }
+    return null;
+  }
+
+  private double calculateTotalDistance(List<City> itinerary) {
+    double totalDistance = 0;
+    for (int i = 0; i < itinerary.size() - 1; i++) {
+      City city1 = itinerary.get(i);
+      City city2 = itinerary.get(i + 1);
+      totalDistance += Util.distance(city1.getLatitude(), city1.getLongitude(), city2.getLatitude(),
+          city2.getLongitude());
+    }
+    return totalDistance;
+  }
+
+  private void printItinerary(List<City> itinerary) {
+    for (int i = 0; i < itinerary.size() - 1; i++) {
+      City city1 = itinerary.get(i);
+      City city2 = itinerary.get(i + 1);
+      double distanceBetweenCities = Util.distance(city1.getLatitude(), city1.getLongitude(),
+          city2.getLatitude(), city2.getLongitude());
+
+      System.out.println(city1.getName() + " -> " + city2.getName() + " (" + String.format("%.2f",
+          distanceBetweenCities) + " km)");
+    }
   }
 }

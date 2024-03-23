@@ -2,7 +2,7 @@ public class Util {
 
     // Calculate distance between two points in latitude and longitude
     // @returns Distance in kilometers
-    public static double distance(double lat1, double lon1, double lat2, double lon2) {
+    public static double distance(double lon1, double lat1, double lon2, double lat2) {
         double earthRadius = 6371; // Radius of the Earth in kilometers
 
         double latDistance = Math.toRadians(lat2 - lat1);
